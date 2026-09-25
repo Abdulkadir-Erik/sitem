@@ -24,23 +24,7 @@ const techStack = [
   { category: "Hardware & Embedded", icon: <Cpu className="w-6 h-6" />, items: ["NRF24", "ESP32", "SPI", "CAN bus", "Modbus TCP/IP", "Microprocessor PCB Design", "Arduino", "PIC CCS"] },
   { category: "Systems & Cloud", icon: <Server className="w-6 h-6" />, items: ["Windows Server", "Active Directory", "Hyper-V", "IIS", "Network Security", "Firewall", "VPN"] }
 ];
-
-const experiences = [
-  { role: "IT System Specialist", company: "Sekizli Makina ve Vinç A.Ş.", period: "Mar 2023 - Present" },
-  { role: "Production Management Manager", company: "Mikotek Elektronik", period: "Jun 2020 - Jan 2022" },
-  { role: "IT System Specialist", company: "Çelikkayalar AVM", period: "Sep 2016 - May 2020" },
-  { role: "IT System Specialist", company: "Beraytek Bilgi Tek.", period: "May 2014 - Sep 2016" },
-  { role: "Technical Team Supervisor", company: "Babayiğit Teknoloji Grup", period: "Feb 2013 - Oct 2013" },
-  { role: "Technical Service Specialist", company: "Bio Elektronik", period: "Jul 2009 - Dec 2012" }
-];
-
-const education = [
-  { degree: "Business Administration (Bachelor's Degree)", institution: "Anadolu University" },
-  { degree: "Control and Automation Technology (Associate Degree)", institution: "Selçuk University" },
-  { degree: "C# Certification for Professional Web Developers", institution: "CanCanIT" },
-  { degree: "Network System Specialist Certification", institution: "Voctest" }
-];
-
+ 
 export default function Portfolio() {
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-emerald-neon/30 font-sans">
@@ -52,7 +36,6 @@ export default function Portfolio() {
           <div className="hidden md:flex gap-8 text-sm text-zinc-400 font-medium">
             <Link href="#about" className="hover:text-emerald-neon transition-colors">About</Link>
             <Link href="#tech" className="hover:text-emerald-neon transition-colors">Stack</Link>
-            <Link href="#experience" className="hover:text-emerald-neon transition-colors">Experience</Link>
             <Link href="#contact" className="hover:text-emerald-neon transition-colors">Contact</Link>
           </div>
         </div>
@@ -85,15 +68,12 @@ export default function Portfolio() {
           </p>
           
           <div className="flex flex-wrap gap-4">
-            <Link href="#experience" className="px-6 py-3 bg-emerald-neon text-black font-semibold rounded-lg hover:bg-emerald-neon/90 transition-all flex items-center gap-2">
-              View Work <ChevronRight className="w-4 h-4" />
+            <Link href="#tech" className="px-6 py-3 bg-emerald-neon text-black font-semibold rounded-lg hover:bg-emerald-neon/90 transition-all flex items-center gap-2">
+              Tech Stack <ChevronRight className="w-4 h-4" />
             </Link>
             <Link href="#contact" className="px-6 py-3 bg-white/5 border border-white/10 hover:bg-white/10 rounded-lg transition-all flex items-center gap-2">
               <Mail className="w-4 h-4" /> Contact Me
             </Link>
-            <button className="px-6 py-3 text-zinc-300 hover:text-emerald-neon transition-colors flex items-center gap-2">
-              <Download className="w-4 h-4" /> Download CV
-            </button>
           </div>
         </motion.div>
       </section>
@@ -160,69 +140,7 @@ export default function Portfolio() {
           ))}
         </div>
       </section>
-
-      {/* Experience & Education */}
-      <section id="experience" className="py-24 px-6 bg-zinc-900/30 border-y border-white/5">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16">
-          
-          {/* Experience Timeline */}
-          <div>
-            <h2 className="text-3xl font-bold mb-10 flex items-center gap-3">
-              <Briefcase className="text-emerald-neon w-8 h-8" /> Work Experience
-            </h2>
-            <div className="space-y-8 relative before:absolute before:inset-0 before:ml-2.5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-emerald-neon/20 before:to-transparent">
-              {experiences.map((exp, idx) => (
-                <motion.div 
-                  key={idx}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1 }}
-                  className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active"
-                >
-                  <div className="flex items-center justify-center w-6 h-6 rounded-full border-4 border-background bg-emerald-neon text-background shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 ml-[2px] md:ml-0 z-10" />
-                  <div className="w-[calc(100%-2.5rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-2xl border border-white/5 bg-background shadow hover:border-emerald-neon/30 transition-colors">
-                    <div className="flex flex-col mb-1">
-                      <h4 className="text-lg font-bold">{exp.role}</h4>
-                      <span className="text-emerald-neon font-medium text-sm">{exp.company}</span>
-                    </div>
-                    <time className="text-sm text-zinc-500">{exp.period}</time>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-          {/* Education */}
-          <div>
-            <h2 className="text-3xl font-bold mb-10 flex items-center gap-3">
-              <GraduationCap className="text-emerald-neon w-8 h-8" /> Education
-            </h2>
-            <div className="space-y-6">
-              {education.map((edu, idx) => (
-                <motion.div 
-                  key={idx}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1 }}
-                  className="p-6 bg-background border border-white/5 rounded-2xl flex items-start gap-4 hover:border-white/10 transition-colors"
-                >
-                  <div className="mt-1 text-emerald-neon">
-                    {idx < 2 ? <GraduationCap className="w-6 h-6" /> : <Shield className="w-6 h-6" />}
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-lg leading-tight mb-1">{edu.degree}</h4>
-                    <span className="text-zinc-400 text-sm">{edu.institution}</span>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-
-        </div>
-      </section>
-
+ 
       {/* Contact Section */}
       <section id="contact" className="py-24 px-6 max-w-6xl mx-auto">
         <div className="grid md:grid-cols-2 gap-16 items-center">
