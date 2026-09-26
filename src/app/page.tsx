@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { 
   ChevronRight, 
   Download, 
@@ -16,7 +17,9 @@ import {
   Database,
   Shield,
   Send,
-  FolderOpen
+  FolderOpen,
+  Menu,
+  X
 } from "lucide-react";
 import Link from "next/link";
 
@@ -55,24 +58,86 @@ const projects = [
 ];
  
 export default function Portfolio() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const navLinks = [
+    { name: "About", href: "#about" },
+    { name: "Stack", href: "#tech" },
+    { name: "Projects", href: "#projects" },
+    { name: "Contact", href: "#contact" },
+  ];
+
   return (
-    <div className="min-h-screen bg-background text-foreground selection:bg-emerald-neon/30 font-sans">
+    <div className="min-h-screen bg-background text-foreground selection:bg-emerald-neon/30 font-sans relative overflow-hidden">
       
+      {/* Spacey Background Effect */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <motion.div 
+          animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.15, 0.1] }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-emerald-neon/20 blur-[120px]"
+        />
+        <motion.div 
+          animate={{ scale: [1, 1.5, 1], opacity: [0.05, 0.1, 0.05] }}
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-cyan-500/20 blur-[120px]"
+        />
+      </div>
+
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b border-white/5">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <span className="font-bold text-xl tracking-tighter">Abdulkadir<span className="text-emerald-neon">.</span></span>
+          <span className="font-bold text-xl tracking-tighter relative z-50">Abdulkadir<span className="text-emerald-neon">.</span></span>
+          
+          {/* Desktop Nav */}
           <div className="hidden md:flex gap-8 text-sm text-zinc-400 font-medium">
-            <Link href="#about" className="hover:text-emerald-neon transition-colors">About</Link>
-            <Link href="#tech" className="hover:text-emerald-neon transition-colors">Stack</Link>
-            <Link href="#projects" className="hover:text-emerald-neon transition-colors">Projects</Link>
-            <Link href="#contact" className="hover:text-emerald-neon transition-colors">Contact</Link>
+            {navLinks.map((link) => (
+              <Link key={link.name} href={link.href} className="hover:text-emerald-neon transition-colors">{link.name}</Link>
+            ))}
           </div>
+
+          {/* Mobile Menu Toggle */}
+          <button 
+            className="md:hidden relative z-50 p-2 -mr-2 text-zinc-400 hover:text-emerald-neon transition-colors"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
       </nav>
 
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="fixed inset-0 z-40 bg-background/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 md:hidden"
+          >
+            {navLinks.map((link, i) => (
+              <motion.div
+                key={link.name}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <Link 
+                  href={link.href} 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-2xl font-bold text-zinc-400 hover:text-emerald-neon transition-colors"
+                >
+                  {link.name}
+                </Link>
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Hero Section */}
-      <section className="pt-40 pb-20 px-6 max-w-6xl mx-auto flex flex-col items-start justify-center min-h-[90vh]">
+      <section className="pt-40 pb-20 px-6 max-w-6xl mx-auto flex flex-col items-start justify-center min-h-[90vh] relative z-10">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -109,7 +174,7 @@ export default function Portfolio() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-24 px-6 bg-zinc-900/30 border-y border-white/5">
+      <section id="about" className="py-24 px-6 bg-zinc-900/30 border-y border-white/5 relative z-10">
         <div className="max-w-6xl mx-auto">
           <motion.div 
             initial={{ opacity: 0 }}
@@ -143,7 +208,7 @@ export default function Portfolio() {
       </section>
 
       {/* Tech Stack */}
-      <section id="tech" className="py-24 px-6 max-w-6xl mx-auto">
+      <section id="tech" className="py-24 px-6 max-w-6xl mx-auto relative z-10">
         <h2 className="text-3xl font-bold mb-12 text-center">Tech Stack & Competencies</h2>
         <div className="grid md:grid-cols-3 gap-8">
           {techStack.map((stack, idx) => (
@@ -171,7 +236,7 @@ export default function Portfolio() {
         </div>
       </section>
       {/* Projects Section */}
-      <section id="projects" className="py-24 px-6 bg-zinc-900/30 border-y border-white/5">
+      <section id="projects" className="py-24 px-6 bg-zinc-900/30 border-y border-white/5 relative z-10">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold mb-12 flex items-center gap-3">
             <FolderOpen className="text-emerald-neon w-8 h-8" /> Featured Projects
@@ -202,7 +267,7 @@ export default function Portfolio() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-24 px-6 max-w-6xl mx-auto">
+      <section id="contact" className="py-24 px-6 max-w-6xl mx-auto relative z-10">
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <div>
             <h2 className="text-4xl font-bold mb-6">Let's Build Something <span className="text-emerald-neon">Together</span></h2>
