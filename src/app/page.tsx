@@ -15,7 +15,8 @@ import {
   Terminal,
   Database,
   Shield,
-  Send
+  Send,
+  FolderOpen
 } from "lucide-react";
 import Link from "next/link";
 
@@ -23,6 +24,34 @@ const techStack = [
   { category: "Software & Frameworks", icon: <Code2 className="w-6 h-6" />, items: ["C#", "ASP.NET Core", "Next.js", "Flutter", "RESTful APIs", "JavaScript", "DevExpress", "Xamarin"] },
   { category: "Hardware & Embedded", icon: <Cpu className="w-6 h-6" />, items: ["NRF24", "ESP32", "SPI", "CAN bus", "Modbus TCP/IP", "Microprocessor PCB Design", "Arduino", "PIC CCS"] },
   { category: "Systems & Cloud", icon: <Server className="w-6 h-6" />, items: ["Windows Server", "Active Directory", "Hyper-V", "IIS", "Network Security", "Firewall", "VPN"] }
+];
+
+const projects = [
+  {
+    title: "Wireless Crane Remote Control",
+    description: "End-to-end hardware and software production using NRF24 communication, CAN bus, TCP/IP, and Hyper-V virtualization.",
+    tags: ["NRF24", "CAN bus", "TCP/IP", "Hyper-V", "PCB"],
+  },
+  {
+    title: "Fast Sales (POS) Applications",
+    description: "High-performance Point of Sale solutions designed for speed and reliability in retail environments.",
+    tags: ["C#", ".NET", "Desktop", "POS"],
+  },
+  {
+    title: "ERP Integrations",
+    description: "Seamless enterprise data sync utilizing Netsis NetOpenX DLL and Atiker ERP systems for business automation.",
+    tags: ["Netsis", "NetOpenX", "Atiker ERP", "SQL Server"],
+  },
+  {
+    title: "Custom Mobile & CMS Solutions",
+    description: "Production tracking, BPMN workflow automation, and custom management systems built from the ground up.",
+    tags: ["Flutter", "Dart", "BPMN", "Mobile"],
+  },
+  {
+    title: "Enterprise Web Applications",
+    description: "Advanced corporate platforms developed with modern stacks to ensure scalability and ultra-fast performance.",
+    tags: ["Next.js", "React", "Sanity CMS", "Tailwind"],
+  }
 ];
  
 export default function Portfolio() {
@@ -36,6 +65,7 @@ export default function Portfolio() {
           <div className="hidden md:flex gap-8 text-sm text-zinc-400 font-medium">
             <Link href="#about" className="hover:text-emerald-neon transition-colors">About</Link>
             <Link href="#tech" className="hover:text-emerald-neon transition-colors">Stack</Link>
+            <Link href="#projects" className="hover:text-emerald-neon transition-colors">Projects</Link>
             <Link href="#contact" className="hover:text-emerald-neon transition-colors">Contact</Link>
           </div>
         </div>
@@ -140,7 +170,37 @@ export default function Portfolio() {
           ))}
         </div>
       </section>
- 
+      {/* Projects Section */}
+      <section id="projects" className="py-24 px-6 bg-zinc-900/30 border-y border-white/5">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold mb-12 flex items-center gap-3">
+            <FolderOpen className="text-emerald-neon w-8 h-8" /> Featured Projects
+          </h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projects.map((project, idx) => (
+              <motion.div 
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                className="p-8 bg-background border border-white/5 rounded-3xl hover:border-emerald-neon/30 transition-colors flex flex-col h-full group"
+              >
+                <h3 className="text-xl font-bold mb-3 group-hover:text-emerald-neon transition-colors">{project.title}</h3>
+                <p className="text-zinc-400 text-sm leading-relaxed mb-6 flex-grow">{project.description}</p>
+                <div className="flex flex-wrap gap-2 mt-auto">
+                  {project.tags.map((tag, i) => (
+                    <span key={i} className="px-3 py-1 bg-white/5 text-xs text-zinc-300 rounded-lg border border-white/10">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Contact Section */}
       <section id="contact" className="py-24 px-6 max-w-6xl mx-auto">
         <div className="grid md:grid-cols-2 gap-16 items-center">
